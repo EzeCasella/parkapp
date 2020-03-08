@@ -6,10 +6,13 @@ from django.core import serializers
 from .models import Parking
 
 def index(request):
+    return render(request, 'map/index.html')
+
+def map(request):
 
     parkings_list = Parking.objects.all()
     context = {
         'parkings_list': parkings_list ,
         # 'parkings_list': json.dumps("json", parkings_list) ,
     }
-    return render(request, 'map/index.html', context)
+    return render(request, 'map/map.html', context)
