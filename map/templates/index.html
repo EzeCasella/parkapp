@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+{% block title %}ParkApp | Inicio{% endblock %}
+
+{% block navbar %} 
+    {% comment 'empty navbar' %}
+    {% endcomment %}
+{% endblock navbar %}
+
+{% block content %}
+    <div class="white-box center">
+        <img src="{% static 'images/logoBIG.png' %}" alt="ParkApp Logo" class="center" id="loginImg">
+        <a href="{% url 'map' %}" class="button center">Ver Mapa</a>
+    </div>
+    
+{% endblock %}

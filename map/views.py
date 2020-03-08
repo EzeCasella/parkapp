@@ -6,7 +6,7 @@ from django.core import serializers
 from .models import Parking
 
 def index(request):
-    return render(request, 'map/index.html')
+    return render(request, 'index.html')
 
 def map(request):
 
