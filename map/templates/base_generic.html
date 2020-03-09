@@ -9,9 +9,16 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    {% block navbar %}
-        {% include 'navbar.html' %}
-    {% endblock navbar %}
-    {% block content %}{% endblock content %}
+    <div class="flexbox_col">
+        <header>
+            {% block navbar %}
+                {% include 'navbar.html' %}
+            {% endblock navbar %}
+        </header>
+        
+        
+        {% block content %}{% endblock content %}
+    
+    </div>
 </body>
 </html>

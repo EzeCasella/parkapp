@@ -1,0 +1,16 @@
+{% if sel_parking %}
+    <h4>{{ sel_parking.name }}</h4>
+    <hr>
+    <ul style=" list-style-type: none; padding: 0;">
+        <li><b>Precio por hora:</b> {{ sel_parking.hourRate }}</li><hr>
+        <li><b>Direccion:</b> {{ sel_parking.address }}</li><hr>
+        <li><b>Capacidad:</b> {{ sel_parking.carSlots }}</li><hr>
+        <li><b>Horario:</b> {{ sel_parking.openingHours }}</li><hr>
+        <li><b>Notas:</b> {{ sel_parking.notes }}</li><hr>
+    </ul>
+    
+{% else %}
+    <hr>
+    <p>Seleccione un Parking para reservar.</p>
+    <hr>
+{% endif %}

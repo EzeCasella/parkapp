@@ -13,7 +13,16 @@
 {% block title %}Mapa{% endblock title %}
 
 {% block content %}
-    <div id="mapid"></div>
+
+    <div class="flexbox_row" id="map_container">
+        <div id="mapid"></div>
+
+        <section id="sect_reservas">
+            <h3>Reservas</h3>
+            {% include 'map/detail.html' %}
+        </section>  
+    </div>
+    
 
     <script>
         let mymap = L.map('mapid').setView([-34.905572, -56.185026], 15);
@@ -41,13 +50,14 @@
         // });
         
     </script>
-
+    
+    {% comment %} \"{% url 'detail' parking.id %}\"" {% endcomment %}
     <!-- TODO: Procurar dejar todo en un solo tag de script -->
     {% if parkings_list %}
         {% for parking in parkings_list %}
             <script>
                 L.marker(["{{ parking.latitude }}", "{{ parking.longitude }}"]).addTo(mymap)
-                .bindPopup("<b>"+"{{parking.name}}"+"</b><br>I am a popup. <button>Reservar</button>");
+                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><a href=\"{% url 'detail' parking.id %}\" class=\"button center\"> Reservar</a>"){% if parking.id == sel_parking.id %}.openPopup(){% endif %};
             </script>
         {% endfor %}
     {% else %}
