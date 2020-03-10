@@ -18,13 +18,15 @@
         <div id="mapid"></div>
 
         <section id="sect_reservas">
-            <h3>Reservas</h3>
+            <h3>Informacion</h3>
             {% include 'map/detail.html' %}
         </section>  
     </div>
     
+{% endblock content %}
 
-    <script>
+{% block javascript %}
+<script>
         let mymap = L.map('mapid').setView([-34.905572, -56.185026], 15);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -57,7 +59,39 @@
         {% for parking in parkings_list %}
             <script>
                 L.marker(["{{ parking.latitude }}", "{{ parking.longitude }}"]).addTo(mymap)
-                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><a href=\"{% url 'detail' parking.id %}\" class=\"button center\"> Reservar</a>"){% if parking.id == sel_parking.id %}.openPopup(){% endif %};
+                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><hr><button id=\"{{ parking.id }}\" class=\"button center\">Reservar</button>")
+                .on('click', function () {
+                    event.preventDefault();
+                    // get el parking id
+                    let parking_id = "{{ parking.id }}";
+                    // GET AJAX request
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'get_parking_info' %}",
+                        data: {"parking_id": parking_id},
+                        success: function (response) {
+                            let parking = JSON.parse(response["parking"]);
+                            let fields = parking[0]["fields"];
+                            console.log(fields["name"]);
+                            $("#parking_details").html(
+                                `<h4>${fields["name"]||""}</h4>
+                                <hr>
+                                <ul style=" list-style-type: none; padding: 0;">
+                                    <li><b>Precio por hora:</b> ${fields["hourRate"]||""}</li><hr>
+                                    <li><b>Direccion:</b> ${fields["address"]||""}</li><hr>
+                                    <li><b>Capacidad:</b> ${fields["carSlots"]||""}</li><hr>
+                                    <li><b>Horario:</b> ${fields["openingHours"]||""}</li><hr>
+                                    <li><b>Notas:</b> ${fields["notes"]||""}</li><hr>
+                                </ul>`
+                            )
+                        },
+                        error: function (response) {
+                            // alert the error if any error occured
+                            alert(response["responseJSON"]["error"]);
+                        }
+                    })
+                });
+                {% comment %} $(). {% endcomment %}
             </script>
         {% endfor %}
     {% else %}
@@ -76,4 +110,5 @@
     {% else %}
         <p>No parkings</p>
     {% endif %} -->
-{% endblock content %}
+    
+{% endblock javascript %}
