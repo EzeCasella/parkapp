@@ -59,7 +59,7 @@
         {% for parking in parkings_list %}
             <script>
                 L.marker(["{{ parking.latitude }}", "{{ parking.longitude }}"]).addTo(mymap)
-                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><hr><button id=\"{{ parking.id }}\" class=\"button center\">Reservar</button>")
+                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><hr><button class=\"button center\">Más Información</button><br><hr><button id=\"{{ parking.id }}\" class=\"button center\">Reservar</button>")
                 .on('click', function () {
                     event.preventDefault();
                     // get el parking id
