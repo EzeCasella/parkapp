@@ -1,0 +1,12 @@
+{{ form.media }}
+<form action="{% url 'make_schedule' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Confirmar">
+    <p>(*).- Dicho numero se utilizara para confirmar la reserva.</p>
+</form>
