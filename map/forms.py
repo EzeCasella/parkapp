@@ -4,19 +4,23 @@ from .models import Schedule
 
 # Create the form class.
 
-class DateTimeInput (forms.DateTimeInput):
-    input_type='datetime-local'
+class DateInput (forms.DateInput):
+    input_type='date'
+
+class TimeInput (forms.TimeInput):
+    input_type='time'
 
 class ScheduleForm(ModelForm):
     class Meta:
         model = Schedule
-        fields = ['checkin_datetime', 'checkout_datetime', 'phone_number']
+        fields = ['checkin_date', 'checkin_time', 'checkout_date', 'checkout_time', 'phone_number']
         widgets = {
-            # 'checkin_datetime' : DateTimeInput(),
-            # 'checkout_datetime' : DateTimeInput(),
+            'checkin_date' : DateInput(),
+            'checkin_time' : TimeInput(),
+            'checkout_date' : DateInput(),
+            'checkout_time' : TimeInput(),
+
         }
         labels = {
-            'checkin_datetime' : "Entrada",
-            'checkout_datetime' : "Salida",
             'phone_number' : "Nro. de teléfono (*)"
         }

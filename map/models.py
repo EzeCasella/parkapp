@@ -24,7 +24,11 @@ class Parking(models.Model):
 class Schedule(models.Model):
     parking = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True)
 
-    checkin_datetime = models.DateTimeField(default=timezone.now, auto_now=False, auto_now_add=False)
-    checkout_datetime = models.DateTimeField(default=timezone.now, auto_now=False, auto_now_add=False)
+    checkin_date = models.DateField(default=timezone.now, auto_now=False, auto_now_add=False)
+    checkin_time = models.TimeField(default=timezone.now, auto_now=False, auto_now_add=False)
+
+    checkout_date = models.DateField(default=timezone.now, auto_now=False, auto_now_add=False)
+    checkout_time = models.TimeField(default=timezone.now, auto_now=False, auto_now_add=False)
+
 
     phone_number = models.CharField(max_length=20)
