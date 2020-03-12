@@ -11,11 +11,12 @@ def index(request):
     return redirect('map')
 
 def map(request):
-
+    form = ScheduleForm()
     parkings_list = Parking.objects.all()
     context = {
         'parkings_list': parkings_list ,
         # 'parkings_list': json.dumps("json", parkings_list) ,
+        'form':form,
     }
     return render(request, 'map/map.html', context)
 

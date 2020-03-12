@@ -18,10 +18,10 @@
         <div id="mapid"></div>
 
         <section id="sect_reservas">
-            <h3>Informacion</h3>
-            {% include 'map/detail.html' %}
+            {% include 'map/schedule.html' %}
         </section>  
     </div>
+    
     
 {% endblock content %}
 
@@ -59,7 +59,7 @@
         {% for parking in parkings_list %}
             <script>
                 L.marker(["{{ parking.latitude }}", "{{ parking.longitude }}"]).addTo(mymap)
-                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><hr><button class=\"button center\">Más Información</button><br><hr><button id=\"{{ parking.id }}\" class=\"button center\">Reservar</button>")
+                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><hr><a id=\"{{ parking.id }}\" class=\"button reserva center\">Reservar</a>")
                 .on('click', function () {
                     event.preventDefault();
                     // get el parking id
@@ -72,9 +72,10 @@
                         success: function (response) {
                             let parking = JSON.parse(response["parking"]);
                             let fields = parking[0]["fields"];
-                            console.log(fields["name"]);
+                            // console.log(fields["name"]);
                             $("#parking_details").html(
-                                `<h4>${fields["name"]||""}</h4>
+                                `<h3>Información</h3>
+                                <h4>${fields["name"]||""}</h4>
                                 <hr>
                                 <ul style=" list-style-type: none; padding: 0;">
                                     <li><b>Precio por hora:</b> ${fields["hourRate"]||""}</li><hr>
