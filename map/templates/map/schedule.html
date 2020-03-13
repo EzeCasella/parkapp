@@ -1,5 +1,5 @@
 <h3>Reserva</h3>
-<form action="{% url 'make_schedule' %}" method="post">
+<form action="{% url 'post_schedule' parking_id %}" method="post">
     {% csrf_token %}
     {% for field in form %}
         <div class="fieldWrapper">

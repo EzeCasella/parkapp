@@ -62,7 +62,28 @@
                 popupContainer.html("<h3>"+"{{parking.name}}"+"</h3><br><hr><a id=\"{{ parking.id }}\" " 
                     + "class=\"button reserva {{ parking.id }} center\">Reservar</a>");
                 popupContainer.on('click', '.button.reserva.{{ parking.id }}', function () {
-                    alert('Parking id: {{ parking.id }}');
+                    event.preventDefault();
+                    // get el parking id
+                    let parking_id = "{{ parking.id }}";
+                    // GET AJAX request
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'new_schedule' %}",
+                        data: {"parking_id": parking_id},
+                        success: function (response) {
+                            let parking_name = response["parking_name"];
+                            let form = response["form"];
+                            // console.log(fields["name"]);
+                            $("#parking_details").prepend(
+                                `<h3>${parking_name}</h3>
+                                ${form}`
+                            )
+                        },
+                        error: function (response) {
+                            // alert the error if any error occured
+                            alert(response["responseJSON"]["error"]);
+                        }
+                    })
                 });
 
                 L.marker(["{{ parking.latitude }}", "{{ parking.longitude }}"]).addTo(mymap)
