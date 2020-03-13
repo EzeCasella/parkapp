@@ -18,7 +18,7 @@
         <div id="mapid"></div>
 
         <section id="sect_reservas">
-            {% include 'map/schedule.html' %}
+            {% include 'map/detail.html' %}
         </section>  
     </div>
     
@@ -50,7 +50,7 @@
         //     marker.bindPopup("<b>"+parking.name+"</b><br>I am a popup. <button>Reservar</button>");
 
         // });
-        
+        let popupContainer = $('div');
     </script>
     
     {% comment %} \"{% url 'detail' parking.id %}\"" {% endcomment %}
@@ -58,8 +58,15 @@
     {% if parkings_list %}
         {% for parking in parkings_list %}
             <script>
+                popupContainer = $('<div />');
+                popupContainer.html("<h3>"+"{{parking.name}}"+"</h3><br><hr><a id=\"{{ parking.id }}\" " 
+                    + "class=\"button reserva {{ parking.id }} center\">Reservar</a>");
+                popupContainer.on('click', '.button.reserva.{{ parking.id }}', function () {
+                    alert('Parking id: {{ parking.id }}');
+                });
+
                 L.marker(["{{ parking.latitude }}", "{{ parking.longitude }}"]).addTo(mymap)
-                .bindPopup("<h3>"+"{{parking.name}}"+"</h3><br><hr><a id=\"{{ parking.id }}\" class=\"button reserva center\">Reservar</a>")
+                .bindPopup(popupContainer[0])
                 .on('click', function () {
                     event.preventDefault();
                     // get el parking id
@@ -92,6 +99,7 @@
                         }
                     })
                 });
+
                 {% comment %} $(). {% endcomment %}
             </script>
         {% endfor %}
