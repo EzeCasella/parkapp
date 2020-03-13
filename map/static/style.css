@@ -97,5 +97,5 @@ ul#navbar {
 #sect_reservas {
     flex: 0 1 auto;
     width: 400px;
-    padding: 30px;
+    padding: 0 30px;
 }

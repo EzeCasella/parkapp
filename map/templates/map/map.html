@@ -74,8 +74,8 @@
                             let parking_name = response["parking_name"];
                             let form = response["form"];
                             // console.log(fields["name"]);
-                            $("#parking_details").prepend(
-                                `<h3>${parking_name}</h3>
+                            $("#parking_details").append(
+                                `<!--<h3>${parking_name}</h3>-->
                                 ${form}`
                             )
                         },
