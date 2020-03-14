@@ -106,3 +106,10 @@ ul#navbar {
     border-radius: 16px;
     background-color: darkgreen;
 }
+
+#alerta_confirmacion {
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 16px;
+    font-size: 14px;
+}
