@@ -30,7 +30,7 @@
             url: "{% url 'post_schedule' parking_id %}",
             data: serializedData,
             success: function (response) {
-                
+                $("#schedule-form").trigger('reset');
                 // display the newly friend to table.
                 var parking_name = response["parking_name"];
                 $("#parking_details").html(
