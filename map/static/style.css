@@ -99,3 +99,10 @@ ul#navbar {
     width: 400px;
     padding: 0 30px;
 }
+
+#reserva_correcta {
+    padding: 10px;
+    border: 6px solid green;
+    border-radius: 16px;
+    background-color: darkgreen;
+}

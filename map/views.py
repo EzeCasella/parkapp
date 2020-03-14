@@ -67,7 +67,7 @@ def make_schedule(request, parking_id=None):
                 phone_number = form.cleaned_data['phone_number'],
             )
             sched.save()
-            return redirect('map')
+            return JsonResponse({"parking_name": parking.name }, status=200 )
 
     # if a GET (or any other method) we'll create a blank form
     elif  request.is_ajax and request.method == "GET":
