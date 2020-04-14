@@ -18,12 +18,12 @@ class ParkingAdmin (admin.ModelAdmin):
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'parking')
-    list_display = ('id', 'parking', 'checkin_date', 'checkin_time', 'checkout_date', 'checkout_time', 'phone_number' )
+    list_display = ('id', 'confirmed', 'parking', 'checkin_date', 'checkin_time', 'checkout_date', 'checkout_time', 'phone_number' )
     
-    list_filter = ['checkin_date', 'parking']
+    list_filter = [ 'confirmed','checkin_date', 'parking']
 
     fieldsets = [
-        ('Schedule',               {'fields': ['id', 'parking']}),
+        ('Schedule',               {'fields': ['id', 'confirmed', 'parking']}),
         ('Date Information', {'fields':['checkin_date', 'checkin_time', 'checkout_date', 'checkout_time']}),
         ('Contact Information', {'fields': ['phone_number']})
     ]
