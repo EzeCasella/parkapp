@@ -5,6 +5,9 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('map/', views.map, name='map'),
+    path('contact/', views.contact, name='contact'),
+    path('about/', views.about, name='about'),
+    path('news/', views.news, name='news'),
     path('map/<int:parking_id>/', views.detail, name='detail'), # Quedó obsoleta porque se utiliza get_parking_info
     path('ajax/getParkingInfo', views.get_parking_info, name='get_parking_info'),
     path('newSchedule', views.make_schedule, name='new_schedule'),

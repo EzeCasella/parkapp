@@ -87,3 +87,16 @@ def make_schedule(request, parking_id=None):
     return JsonResponse({}, status = 400)
 
     return render(request, 'map/schedule.html', {'form': form})
+
+
+def contact(request):
+
+    return render(request, 'contact.html')
+
+def about(request):
+
+    return render(request, 'about.html')
+
+def news(request):
+
+    return render(request, 'news.html')
