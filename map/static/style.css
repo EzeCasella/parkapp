@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+body{
+    margin: 0;
+    background-color: #333;
+    color: white;
+}
+
+.flexbox_col {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.flexbox_row {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    height: 100%;
+}
+
+.flexbox header {
+    flex: 0 1 auto;
+}
+
+.center {
+    display: block;
+    margin: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.button {
+    background-color: #008CBA;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 16px;
+    /* margin: 4px 2px; */
+    cursor: pointer;
+    width: 100%;
+}
+a.button {
+    color: white;
+}
+
+.white-box {
+    background: rgba(255, 255, 255, 1);
+    /* width: fit-content; */
+    padding: 50px;
+    margin: 100px 20px;
+}
+
+ul#navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 90px;
+    overflow: hidden;
+    background-color: #333;
+}
+#navbar li {
+  float: left;
+}
+
+#navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#navbar li a:hover {
+  background-color: #111;
+}
+
+#loginImg {
+    max-width: 310px;
+    margin: 0 auto 20px;
+}
+
+#mapid { 
+    flex: 1 1 auto;
+    height: 100%;
+    /* width: 180; */
+    vertical-align: middle;
+}
+
+#sect_reservas {
+    flex: 0 1 auto;
+    width: 400px;
+    padding: 0 30px;
+}
+
+#reserva_correcta {
+    padding: 10px;
+    border: 6px solid green;
+    border-radius: 16px;
+    background-color: darkgreen;
+}
+
+#alerta_confirmacion {
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 16px;
+    font-size: 14px;
+}

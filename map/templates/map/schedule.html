@@ -1,0 +1,48 @@
+<h3>Reserva</h3>
+<form id="schedule-form" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+        <hr>
+    {% endfor %}
+    <input type="submit" value="Enviar Reserva" class="button center">
+    <p>(*).- Se utilizará para confirmar la reserva.</p>
+</form>
+<script>
+    /*
+        On submiting the form, send the POST ajax
+        request to server and after successfull submission
+        display the object.
+    */
+    $("#schedule-form").submit(function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // console.log(serializedData);
+        // console.log("{{ parking_id }}")
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'post_schedule' parking_id %}",
+            data: serializedData,
+            success: function (response) {
+                $("#schedule-form").trigger('reset');
+                // display the newly friend to table.
+                var parking_name = response["parking_name"];
+                $("#parking_details").html(
+                    `<p id="reserva_correcta">Reserva a <b>${ parking_name }</b> enviada con exito.</p>
+                    <p id="alerta_confirmacion"><i>No olvides responder la confirmación telefónica.</i></p><br>
+                    {% include 'map/detail.html' %}`
+                )
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+</script>
