@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.template.loader import render_to_string
 
+from random import randint
+
 # Create your views here.
 from .models import Parking, Schedule
 from .forms import ScheduleForm
@@ -20,6 +22,15 @@ def map(request):
         'form':form,
     }
     return render(request, 'map/map.html', context)
+
+def contact(request):
+    return render(request, 'contact.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def news(request):
+    return render(request, 'news.html')
 
 def detail(request, parking_id):
     sel_parking = get_object_or_404(Parking, pk=parking_id)
@@ -58,6 +69,8 @@ def make_schedule(request, parking_id=None):
             # schedule = Schedule()
             parking = Parking.objects.filter(id = parking_id).first()
 
+            rand_conf_code = randint(1000,9999)
+
             sched = Schedule(
                 parking = parking,
                 checkin_date = form.cleaned_data['checkin_date'],
@@ -65,6 +78,7 @@ def make_schedule(request, parking_id=None):
                 checkout_date = form.cleaned_data['checkout_date'],
                 checkout_time = form.cleaned_data['checkout_time'],
                 phone_number = form.cleaned_data['phone_number'],
+                confirmation_code = rand_conf_code,
             )
             sched.save()
             return JsonResponse({"parking_name": parking.name }, status=200 )
@@ -88,15 +102,3 @@ def make_schedule(request, parking_id=None):
 
     return render(request, 'map/schedule.html', {'form': form})
 
-
-def contact(request):
-
-    return render(request, 'contact.html')
-
-def about(request):
-
-    return render(request, 'about.html')
-
-def news(request):
-
-    return render(request, 'news.html')
