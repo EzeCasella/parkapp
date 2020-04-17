@@ -35,5 +35,7 @@ class Schedule(models.Model):
 
     confirmed = models.BooleanField(default=False)
 
+    confirmation_code = models.CharField( default="0000", max_length=10)
+
     def __str__(self):
         return self.parking.name

@@ -74,7 +74,7 @@
                             let parking_name = response["parking_name"];
                             let form = response["form"];
                             // console.log(fields["name"]);
-                            $("#parking_details").append(
+                            $("#sched_details").html(
                                 `<!--<h3>${parking_name}</h3>-->
                                 ${form}`
                             )
@@ -111,7 +111,8 @@
                                     <li><b>Capacidad:</b> ${fields["carSlots"]||""}</li><hr>
                                     <li><b>Horario:</b> ${fields["openingHours"]||""}</li><hr>
                                     <li><b>Notas:</b> ${fields["notes"]||""}</li><hr>
-                                </ul>`
+                                </ul>
+                                <div id='sched_details'></div>`
                             )
                         },
                         error: function (response) {

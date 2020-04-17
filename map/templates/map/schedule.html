@@ -32,17 +32,57 @@
             success: function (response) {
                 $("#schedule-form").trigger('reset');
                 // display the newly friend to table.
-                var parking_name = response["parking_name"];
+                //var parking_name = response["parking_name"];
+                const sched_id = response["sched_id"];
+
                 $("#parking_details").html(
-                    `<p id="reserva_correcta">Reserva a <b>${ parking_name }</b> enviada con exito.</p>
-                    <p id="alerta_confirmacion"><i>No olvides responder la confirmación telefónica.</i></p><br>
-                    {% include 'map/detail.html' %}`
-                )
+                    `<form id="sched_confirm" method="post">
+                        {% csrf_token %}
+                        
+                        <label for="conf_code_input">Ingrese el codigo recibido por SMS.</label>
+                        <input type="text" placeholder="Código recibido.." id="conf_code_input" name="confirmation_code">
+                        <input type="hidden" name="sched_id" value="${sched_id}">
+                        
+                        <input type="submit" class="button" value="Confirmar Reserva">
+                    </form>
+                    <div id="conf_status"></div>`
+                );
+                $("#sched_confirm").submit(function (e) {
+                    // preventing from page reload and default actions
+                    e.preventDefault();
+                    // serialize the data for sending the form data.
+                    var serializedData = $(this).serialize();
+                    // make POST ajax call
+                    $.ajax({
+                        type: 'POST',
+                        url: "{% url 'confirm_sched' %}",
+                        data: serializedData ,
+                        success: function (response) {
+                            $("#sched_confirm").trigger('reset');
+                            // display the newly friend to table.
+                            var parking_name = response["parking_name"];
+                            $("#parking_details").html(
+                                `<p id="reserva_correcta">Reserva a <b>${ parking_name }</b> 
+                                confirmada con éxito.</p>
+                                
+                                {% include 'map/detail.html' %}`
+                            )
+                        },
+                        error: function (response) {
+                            $("#conf_status").html(
+                                `<p id="alerta_confirmacion">
+                                <i>Código de confirmación incorrecto.</i>
+                                </p><br>`
+                            );
+                        }
+                    })
+                });
             },
             error: function (response) {
                 // alert the error if any error occured
-                alert(response["responseJSON"]["error"]);
+                alert(`Hubo un error al realizar la reserva. Compruebe que el
+                numero de teléfono sea correcto.`);
             }
         })
-    })
+    });
 </script>
