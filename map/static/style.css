@@ -107,9 +107,22 @@ ul#navbar {
     background-color: darkgreen;
 }
 
+#sched_confirm {
+    padding: 10px;
+    border: 2px solid #008CBA;
+    border-radius: 16px;
+    font-size: 14px;
+}
+
 #alerta_confirmacion {
     padding: 10px;
     border: 2px solid red;
     border-radius: 16px;
     font-size: 14px;
+}
+
+#conf_code_input {
+    margin: 10 0;
+    height: 30;
+    width: 100%;
 }

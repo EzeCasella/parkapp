@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.template.loader import render_to_string
 
+import os # OS imported for enviroment variables
+from twilio.rest import Client
 from random import randint
 
 # Create your views here.
@@ -71,18 +73,32 @@ def make_schedule(request, parking_id=None):
 
             rand_conf_code = randint(1000,9999)
 
-            sched = Schedule(
-                parking = parking,
-                checkin_date = form.cleaned_data['checkin_date'],
-                checkin_time = form.cleaned_data['checkin_time'],
-                checkout_date = form.cleaned_data['checkout_date'],
-                checkout_time = form.cleaned_data['checkout_time'],
-                phone_number = form.cleaned_data['phone_number'],
-                confirmation_code = rand_conf_code,
-            )
-            sched.save()
-            return JsonResponse({"parking_name": parking.name }, status=200 )
+            account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+            auth_token = os.environ["TWILIO_AUTH_TOKEN"]
 
+            client = Client(account_sid, auth_token)
+
+            try:
+                client.messages.create (
+                    to= form.cleaned_data['phone_number'],
+                    from_="+19893421780",
+                    body="Código de su reserva: " + str(rand_conf_code)
+                )
+                sched = Schedule(
+                    parking = parking,
+                    checkin_date = form.cleaned_data['checkin_date'],
+                    checkin_time = form.cleaned_data['checkin_time'],
+                    checkout_date = form.cleaned_data['checkout_date'],
+                    checkout_time = form.cleaned_data['checkout_time'],
+                    phone_number = form.cleaned_data['phone_number'],
+                    confirmation_code = rand_conf_code,
+                )
+                sched.save()
+                return JsonResponse({"parking_name": parking.name, "sched_id": sched.id }, status=200 )
+
+            except:
+                return JsonResponse({}, status = 400)
+            
     # if a GET (or any other method) we'll create a blank form
     elif  request.is_ajax and request.method == "GET":
         # get parking_id del lado del cliente
@@ -98,7 +114,25 @@ def make_schedule(request, parking_id=None):
 
             return JsonResponse({"parking_name": parking_name, 'form': rendered_form}, status = 200)
 
-    return JsonResponse({}, status = 400)
 
     return render(request, 'map/schedule.html', {'form': form})
+
+def confirm_schedule(request):
+    if request.is_ajax and request.method == 'POST':
+    
+        conf_code = request.POST.get("confirmation_code", None)
+        sched_id = request.POST.get("sched_id", None)
+        
+        schedule = Schedule.objects.filter(id = sched_id).first()
+
+        if schedule.confirmation_code == conf_code:
+            schedule.confirmed = True
+            schedule.save()
+            return JsonResponse({"parking_name": schedule.parking.name}, status=200 )
+        else:
+            return JsonResponse({}, status=400 )
+
+
+
+    return JsonResponse({}, status=400)
 

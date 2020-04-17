@@ -22,7 +22,7 @@ class ScheduleForm(ModelForm):
 
         }
         labels = {
-            'phone_number' : "Nro. de teléfono (*)",
+            'phone_number' : "Nro. de celular (*)",
             'checkin_date' : "Fecha de entrada",
             'checkin_time' : "Hora de entrada",
             'checkout_date' : "Fecha de salida",
